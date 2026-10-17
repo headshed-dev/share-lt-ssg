@@ -13,7 +13,7 @@ services:
     tty: true
     volumes:
       # Mount the Astro project itself as /app so `npm run dev` resolves here
-      - ./share-lt:/app
+      - ./:/app
     ports:
       # Astro dev server listens on 0.0.0.0:4321 (via `astro dev --host`)
       - "${DEV_PORT:-4321}:4321"
