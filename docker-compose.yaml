@@ -1,0 +1,29 @@
+services:
+  dev:
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    image: share-lt-astro-ssg-dev:local
+    container_name: astro_ssg_dev
+    working_dir: /app
+    command: ["sleep", "infinity"]
+    stdin_open: true
+    tty: true
+    volumes:
+      # Mount the Astro project itself as /app so `npm run dev` resolves here
+      - ./share-lt:/app
+    ports:
+      # Astro dev server listens on 0.0.0.0:4321 (via `astro dev --host`)
+      - "${DEV_PORT:-4321}:4321"
+    env_file:
+      - path: ./share-lt/.env
+        required: false
+      - path: ./.env
+        required: false
+    environment:
+      - NODE_ENV=development
+      # --- add anything else you need passed in below ---
+      # - SOME_KEY=${SOME_KEY}
+      # - CHOKIDAR_USEPOLLING=true
